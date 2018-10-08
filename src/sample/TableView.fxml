@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller1">
+   <children>
+      <TableView fx:id="tableView" layoutX="7.0" layoutY="15.0" prefHeight="378.0" prefWidth="686.0">
+        <columns>
+          <TableColumn fx:id="contactIDColumn" prefWidth="30.0" text="ID" />
+          <TableColumn fx:id="firstNameColumn" onEditCommit="#changeFirstNameCellEvent" prefWidth="95.0" text="First Name" />
+            <TableColumn fx:id="lastNameColumn" onEditCommit="#changeLastNameCellEvent" prefWidth="115.0" text="Last Name" />
+            <TableColumn fx:id="addressColumn" onEditCommit="#changeAddressCellEvent" prefWidth="203.0" text="Address" />
+            <TableColumn fx:id="phoneColumn" onEditCommit="#changePhoneCellEvent" prefWidth="123.0" text="Phone" />
+            <TableColumn fx:id="birthdayColumn" prefWidth="117.0" text="Birthday" />
+        </columns>
+      </TableView>
+      <Button layoutX="499.0" layoutY="444.0" mnemonicParsing="false" onAction="#changeScreenButtonPushed" text="Create New Contact" />
+   </children>
+</AnchorPane>
