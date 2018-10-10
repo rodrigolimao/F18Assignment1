@@ -147,7 +147,7 @@ public class Controller1 implements Initializable{
 
     /**
      * This method will allow the user to double click on a cell and update
-     * the first name of the person
+     * the last name of the person
      */
     public void changeLastNameCellEvent(CellEditEvent edittedCell)
     {

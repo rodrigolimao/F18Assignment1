@@ -52,6 +52,9 @@ public class ControllerRegistration implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        birthdayDatePicker.setValue(LocalDate.now().minusYears(20));
+
+        imageFileChanged = false; //initially the image has not changed, use the default
 
         errMsgLabel.setText("");
         //load the default image for the Contact
@@ -115,33 +118,25 @@ public class ControllerRegistration implements Initializable {
     /**
      * This method will create a new Person object and add it to the table
      */
-    public void newPersonButtonPushed() throws SQLException {
-
+    public void newPersonButtonPushed() {
+        try {
             if (imageFileChanged) //create a Contact with a custom image
             {
-                contact = new Contact1(firstNameTextField.getText(),lastNameTextField.getText(),addressTextField.getText(),
+                contact = new Contact1(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(),
                         phoneNumberTextField.getText(), birthdayDatePicker.getValue(), imageFile);
-            }
-            else  //create a Contact with a default image
+            } else  //create a Contact with a default image
             {
-                contact = new Contact1(firstNameTextField.getText(),lastNameTextField.getText(),addressTextField.getText(),
+                contact = new Contact1(firstNameTextField.getText(), lastNameTextField.getText(), addressTextField.getText(),
                         phoneNumberTextField.getText(), birthdayDatePicker.getValue());
             }
+
             errMsgLabel.setText("");    //do not show errors if creating Volunteer was successful
             contact.insertContactIntoDB();
-        }
 
-    /**
-     * This method will read from the GUI fields and update the volunteer object
-     */
-    public void updateContacts() throws IOException
-    {
-        contact.setFirstName(firstNameTextField.getText());
-        contact.setLastName(lastNameTextField.getText());
-        contact.setPhone(phoneNumberTextField.getText());
-        contact.setBirthday(birthdayDatePicker.getValue());
-        contact.setImageFile(imageFile);
-        contact.copyImageFile();
+        } catch (Exception ex) {
+            errMsgLabel.setText(ex.getMessage());
+        }
     }
 
-}
+
+    }
