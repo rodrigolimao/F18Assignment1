@@ -86,7 +86,7 @@ public class Controller1 implements Initializable{
 
         try{
             //1. connect to the database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
             //2.  create a statement object
             st = conn.createStatement();
 

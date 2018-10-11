@@ -245,7 +245,7 @@ public class Contact1 {
         try
         {
             //1. Connect to the database
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
 
             //2. Create a String that holds the query with ? as user inputs
             String sql = "INSERT INTO Contacts (firstName, lastName, address, phone, birthday, imageFile)"
@@ -292,7 +292,7 @@ public class Contact1 {
 
         try{
             //1.  connect to the DB
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB", "root", "root");
+            conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
 
             //2.  create a String that holds our SQL update command with ? for user inputs
             String sql = "UPDATE Contacts SET firstName = ?, lastName = ?, address = ?, phone = ?, birthday = ?, imageFile = ?"
