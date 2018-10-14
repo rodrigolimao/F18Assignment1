@@ -1,0 +1,2 @@
+Simple Javafx application that can read data from the database and insert data in the Database once the user fills all the required fields.
+The user can also choose a random image.
