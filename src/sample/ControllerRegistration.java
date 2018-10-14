@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import javax.imageio.ImageIO;
 
 
@@ -119,6 +120,7 @@ public class ControllerRegistration implements Initializable {
         }
 
     }
+
     /**
      * This method will create a new Contact object and add it to the table
      */

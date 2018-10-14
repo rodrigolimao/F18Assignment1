@@ -30,6 +30,7 @@ public class Contact1 {
         setBirthday(birthday);
         setImageFile(new File("./src/images/defaultImage.jpg"));
     }
+
     /*
    Second constructor with Image from desktop
     */

@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 
-public class Controller1 implements Initializable{
+public class Controller1 implements Initializable {
 
     /*
     Declaring the Scene Builder Containers
@@ -59,16 +60,14 @@ public class Controller1 implements Initializable{
         phoneColumn.setCellValueFactory(new PropertyValueFactory<Contact1, String>("phone"));
         birthdayColumn.setCellValueFactory(new PropertyValueFactory<Contact1, LocalDate>("birthday"));
 
-        try{
+        try {
             loadContacts();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
 
 
-       //Update the table to allow for the first and last name fields to be editable
+        //Update the table to allow for the first and last name fields to be editable
         tableView.setEditable(true);
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -82,15 +81,14 @@ public class Controller1 implements Initializable{
     /*
     Method to load the contacts from the DB
      */
-    public void loadContacts() throws SQLException
-    {
+    public void loadContacts() throws SQLException {
         ObservableList<Contact1> contacts = FXCollections.observableArrayList();
 
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
 
-        try{
+        try {
             //1. Connect to the DB
             conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
             //2.  create a statement object
@@ -100,14 +98,13 @@ public class Controller1 implements Initializable{
             rs = st.executeQuery("SELECT * FROM contacts");
 
             //4.  Create contact objects from each record
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Contact1 newContact = new Contact1(rs.getString("firstName"),
                         rs.getString("lastName"),
                         rs.getString("address"),
                         rs.getString("phone"),
                         rs.getDate("birthday").toLocalDate());
-                        newContact.setContactID(rs.getInt("ContactID"));
+                newContact.setContactID(rs.getInt("ContactID"));
                 newContact.setImageFile(new File(rs.getString("imageFile")));
 
                 contacts.add(newContact);
@@ -115,28 +112,24 @@ public class Controller1 implements Initializable{
 
             tableView.getItems().addAll(contacts);
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println(e);
-        }
-        finally
-        {
+        } finally {
             if (conn != null)
                 conn.close();
-            if(st != null)
+            if (st != null)
                 st.close();
-            if(rs != null)
+            if (rs != null)
                 rs.close();
         }
     }
 
-    public void changeScreenButtonPushed(ActionEvent event) throws IOException
-    {
+    public void changeScreenButtonPushed(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("Registration.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();
     }
@@ -145,9 +138,8 @@ public class Controller1 implements Initializable{
      * This method will allow the user to double click on a cell and update
      * the first name of the person
      */
-    public void changeFirstNameCellEvent(CellEditEvent edittedCell)
-    {
-        Contact1 personSelected =  tableView.getSelectionModel().getSelectedItem();
+    public void changeFirstNameCellEvent(CellEditEvent edittedCell) {
+        Contact1 personSelected = tableView.getSelectionModel().getSelectedItem();
         personSelected.setFirstName(edittedCell.getNewValue().toString());
     }
 
@@ -155,21 +147,18 @@ public class Controller1 implements Initializable{
      * This method will allow the user to double click on a cell and update
      * the last name of the person
      */
-    public void changeLastNameCellEvent(CellEditEvent edittedCell)
-    {
-        Contact1 personSelected =  tableView.getSelectionModel().getSelectedItem();
+    public void changeLastNameCellEvent(CellEditEvent edittedCell) {
+        Contact1 personSelected = tableView.getSelectionModel().getSelectedItem();
         personSelected.setLastName(edittedCell.getNewValue().toString());
     }
 
-    public void changeAddressCellEvent(CellEditEvent edittedCell)
-    {
-        Contact1 personSelected =  tableView.getSelectionModel().getSelectedItem();
+    public void changeAddressCellEvent(CellEditEvent edittedCell) {
+        Contact1 personSelected = tableView.getSelectionModel().getSelectedItem();
         personSelected.setAddress(edittedCell.getNewValue().toString());
     }
 
-    public void changePhoneCellEvent(CellEditEvent edittedCell)
-    {
-        Contact1 personSelected =  tableView.getSelectionModel().getSelectedItem();
+    public void changePhoneCellEvent(CellEditEvent edittedCell) {
+        Contact1 personSelected = tableView.getSelectionModel().getSelectedItem();
         personSelected.setPhone(edittedCell.getNewValue().toString());
     }
 
