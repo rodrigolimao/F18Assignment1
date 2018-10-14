@@ -8,11 +8,15 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
+
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,8 +24,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import javax.imageio.ImageIO;
-import sample.Contact;
+
+import sample.Contact1;
 
 public class ControllerRegistration implements Initializable {
 
@@ -47,7 +53,8 @@ public class ControllerRegistration implements Initializable {
     private boolean imageFileChanged;
     private Contact1 contact;
 
-    @FXML private Label errMsgLabel;
+    @FXML
+    private Label errMsgLabel;
 
 
     @Override
@@ -56,30 +63,29 @@ public class ControllerRegistration implements Initializable {
 
         imageFileChanged = false; //initially the image has not changed, use the default
 
-        errMsgLabel.setText("");
+        errMsgLabel.setText("Welcome to the Registration Page!");
+
         //load the default image for the Contact
-        try{
-            imageFile = new File("./src/images/defaultImage.png");
+        try {
+            imageFile = new File("./src/images/defaultImage.jpg");
             BufferedImage bufferedImage = ImageIO.read(imageFile);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             imageRegistration.setImage(image);
-        }
-
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
     }
 
     public void chooseImageButtonPushed(ActionEvent event) {
-        //get the Stage to open a new window (or Stage in JavaFX)
+
+        //Get the Stage to open a new window (or Stage in JavaFX)
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         //Instantiate a FileChooser object
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Image");
 
-        //filter for .jpg and .png
+        //filter for .jpg, .png and gif
         FileChooser.ExtensionFilter jpgFilter = new FileChooser.ExtensionFilter("Image File (*.jpg)", "*.jpg");
         FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("Image File (*.png)", "*.png");
         FileChooser.ExtensionFilter gifFilter = new FileChooser.ExtensionFilter("Image File (*.gif)", "*.gif");
@@ -116,9 +122,9 @@ public class ControllerRegistration implements Initializable {
 
     }
     /**
-     * This method will create a new Person object and add it to the table
+     * This method will create a new Contact object and add it to the table
      */
-    public void newPersonButtonPushed() {
+    public void newPersonButtonPushed(ActionEvent event) {
         try {
             if (imageFileChanged) //create a Contact with a custom image
             {
@@ -130,13 +136,28 @@ public class ControllerRegistration implements Initializable {
                         phoneNumberTextField.getText(), birthdayDatePicker.getValue());
             }
 
-            errMsgLabel.setText("");    //do not show errors if creating Volunteer was successful
+            errMsgLabel.setText("");    //do not show errors if creating Contact was successful
             contact.insertContactIntoDB();
+            SceneChanger sc = new SceneChanger();
+            sc.changeScenes(event, "TableView.fxml", "Contacts");
 
         } catch (Exception ex) {
             errMsgLabel.setText(ex.getMessage());
         }
     }
 
+    /**
+     * This method will change the screen after pushing the button
+     */
 
+    public void changeScreen(ActionEvent event) throws IOException {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("TableView.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        window.show();
     }
+
+}

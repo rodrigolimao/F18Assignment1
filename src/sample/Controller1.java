@@ -22,10 +22,13 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller1 implements Initializable{
+
+    /*
+    Declaring the Scene Builder Containers
+     */
 
     @FXML
     private TableView<Contact1> tableView;
@@ -43,10 +46,11 @@ public class Controller1 implements Initializable{
     private TableColumn<Contact1, LocalDate> birthdayColumn;
 
     /**
-     * Initializes the controller class.
+     * Initializing the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         //set up the columns in the table
         contactIDColumn.setCellValueFactory(new PropertyValueFactory<Contact1, Integer>("contactID"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<Contact1, String>("firstName"));
@@ -63,8 +67,8 @@ public class Controller1 implements Initializable{
             System.err.println(e.getMessage());
         }
 
-    //Update the table to allow for the first and last name fields
-        //to be editable
+
+       //Update the table to allow for the first and last name fields to be editable
         tableView.setEditable(true);
         firstNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         lastNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -75,7 +79,9 @@ public class Controller1 implements Initializable{
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
-
+    /*
+    Method to load the contacts from the DB
+     */
     public void loadContacts() throws SQLException
     {
         ObservableList<Contact1> contacts = FXCollections.observableArrayList();
@@ -85,15 +91,15 @@ public class Controller1 implements Initializable{
         ResultSet rs = null;
 
         try{
-            //1. connect to the database
+            //1. Connect to the DB
             conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
             //2.  create a statement object
             st = conn.createStatement();
 
-            //3.  create the SQL query
+            //3.  Create the SQL query
             rs = st.executeQuery("SELECT * FROM contacts");
 
-            //4.  create volunteer objects from each record
+            //4.  Create contact objects from each record
             while (rs.next())
             {
                 Contact1 newContact = new Contact1(rs.getString("firstName"),

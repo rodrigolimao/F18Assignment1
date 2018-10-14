@@ -8,10 +8,13 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    /*
+    Method to load the TableView.fxml setting the scene
+     */
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("TableView.fxml"));
-        primaryStage.setTitle("Contact");
+        primaryStage.setTitle("Contacts");
         primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.show();
     }

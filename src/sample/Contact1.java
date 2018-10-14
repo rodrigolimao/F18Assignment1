@@ -27,7 +27,7 @@ public class Contact1 {
         setAddress(address);
         setPhone(phone);
         setBirthday(birthday);
-        setImageFile(new File("./src/images/defaultImage.png"));
+        setImageFile(new File("./src/images/defaultImage.jpg"));
     }
 
     public Contact1(String firstName, String lastName, String address, String phone, LocalDate birthday, File imageFile) {
@@ -56,24 +56,25 @@ public class Contact1 {
         return contactID;
     }
 
-    public void setContactID(int volunteerID) {
-        if (volunteerID >= 0)
-            this.contactID = volunteerID;
+    public void setContactID(int contactID) {
+        if (contactID >= 0)
+            this.contactID = contactID;
         else
-            throw new IllegalArgumentException("VolunteerID must be >= 0");
+            throw new IllegalArgumentException("ContactID must be >= 0");
     }
 
 
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
-            if (!firstName.isEmpty()) {
-                this.firstName = firstName;
-            } else {
-                throw new IllegalArgumentException("First name cannot be empty");
-            }
+        if (!firstName.isEmpty()) {
+            this.firstName = firstName;
+        } else {
+            throw new IllegalArgumentException("First name cannot be empty");
         }
+    }
 
     public String getLastName() {
         return lastName;
@@ -94,6 +95,7 @@ public class Contact1 {
     /**
      * area code    city    house
      * NXX          -XXX    -XXXX
+     *
      * @param phone
      */
     public void setPhone(String phone) {
@@ -108,7 +110,8 @@ public class Contact1 {
     }
 
     /**
-     * Validate if the contact age is between 10 and 100
+     * Validate if the contact age is between 18 and 100
+     *
      * @param birthday
      */
     public void setBirthday(LocalDate birthday) {
@@ -117,7 +120,7 @@ public class Contact1 {
         if (age >= 18 && age <= 100)
             this.birthday = birthday;
         else
-            throw new IllegalArgumentException("Volunteers must be 10-100 years of age.");
+            throw new IllegalArgumentException("Contact must be 10-100 years of age.");
     }
 
     public File getImageFile() {
@@ -128,122 +131,110 @@ public class Contact1 {
         this.imageFile = imageFile;
     }
 
-    public String toString()
-    {
+    public String toString() {
 
         return String.format("%s %s %s %s", firstName, lastName, address, phone);
     }
 
-//    /**
-//     * This method will copy the file specified to the images directory on this server and give it
-//     * a unique name
-//     */
-//    public void copyImageFile() throws IOException
-//    {
-//        //create a new Path to copy the image into a local directory
-//        Path sourcePath = imageFile.toPath();
-//
-//        String uniqueFileName = getUniqueFileName(imageFile.getName());
-//
-//        Path targetPath = Paths.get("./src/images/"+uniqueFileName);
-//
-//        //copy the file to the new directory
-//        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-//
-//        //update the imageFile to point to the new File
-//        imageFile = new File(targetPath.toString());
-//    }
-//
-//
-//    /**
-//     * This method will receive a String that represents a file name and return a
-//     * String with a random, unique set of letters prefixed to it
-//     */
-//    private String getUniqueFileName(String oldFileName)
-//    {
-//        String newName;
-//
-//        //create a Random Number Generator
-//        SecureRandom rng = new SecureRandom();
-//
-//        //loop until we have a unique file name
-//        do
-//        {
-//            newName = "";
-//
-//            //generate 32 random characters
-//            for (int count=1; count <=32; count++)
-//            {
-//                int nextChar;
-//
-//                do
-//                {
-//                    nextChar = rng.nextInt(123);
-//                } while(!validCharacterValue(nextChar));
-//
-//                newName = String.format("%s%c", newName, nextChar);
-//            }
-//            newName += oldFileName;
-//
-//        } while (!uniqueFileInDirectory(newName));
-//
-//        return newName;
-//    }
-//
-//
-//    /**
-//     * This method will search the images directory and ensure that the file name
-//     * is unique
-//     */
-//    public boolean uniqueFileInDirectory(String fileName)
-//    {
-//        File directory = new File("./src/images/");
-//
-//        File[] dir_contents = directory.listFiles();
-//
-//        for (File file: dir_contents)
-//        {
-//            if (file.getName().equals(fileName))
-//                return false;
-//        }
-//        return true;
-//    }
-//
-//    /**
-//     * This method will validate if the integer given corresponds to a valid
-//     * ASCII character that could be used in a file name
-//     */
-//    public boolean validCharacterValue(int asciiValue)
-//    {
-//
-//        //0-9 = ASCII range 48 to 57
-//        if (asciiValue >= 48 && asciiValue <= 57)
-//            return true;
-//
-//        //A-Z = ASCII range 65 to 90
-//        if (asciiValue >= 65 && asciiValue <= 90)
-//            return true;
-//
-//        //a-z = ASCII range 97 to 122
-//        if (asciiValue >= 97 && asciiValue <= 122)
-//            return true;
-//
-//        return false;
-//    }
+    /**
+     * This method will copy the file specified to the images directory on this server and give it
+     * a unique name
+     */
+    public void copyImageFile() throws IOException {
+        //create a new Path to copy the image into a local directory
+        Path sourcePath = imageFile.toPath();
+
+        String uniqueFileName = getUniqueFileName(imageFile.getName());
+
+        Path targetPath = Paths.get("./src/images/" + uniqueFileName);
+
+        //copy the file to the new directory
+        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+        //update the imageFile to point to the new File
+        imageFile = new File(targetPath.toString());
+    }
 
 
     /**
-     * This method will write the instance of the Volunteer into the database
+     * This method will receive a String that represents a file name and return a
+     * String with a random, unique set of letters prefixed to it
      */
-    public void insertContactIntoDB() throws SQLException
-    {
+    private String getUniqueFileName(String oldFileName) {
+        String newName;
+
+        //create a Random Number Generator
+        SecureRandom random = new SecureRandom();
+
+        //loop until we have a unique file name
+        do {
+            newName = "";
+
+            //generate 32 random characters
+            for (int count = 1; count <= 32; count++) {
+                int nextChar;
+
+                do {
+                    nextChar = random.nextInt(123);
+                } while (!validCharacterValue(nextChar));
+
+                newName = String.format("%s%c", newName, nextChar);
+            }
+            newName += oldFileName;
+
+        } while (!uniqueFileInDirectory(newName));
+
+        return newName;
+    }
+
+    /**
+     * This method will look for the images directory and make sure that the file name
+     * is unique
+     */
+    public boolean uniqueFileInDirectory(String fileName) {
+        File directory = new File("./src/images/");
+
+        File[] dir_contents = directory.listFiles();
+
+        for (File file : dir_contents) {
+            if (file.getName().equals(fileName))
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * This method will validate if the integer given corresponds to a valid
+     * ASCII character that could be used in a file name
+     */
+    public boolean validCharacterValue(int asciiValue) {
+
+        //0-9 = ASCII range 48 to 57
+        if (asciiValue >= 48 && asciiValue <= 57)
+            return true;
+
+        //A-Z = ASCII range 65 to 90
+        if (asciiValue >= 65 && asciiValue <= 90)
+            return true;
+
+        //a-z = ASCII range 97 to 122
+        if (asciiValue >= 97 && asciiValue <= 122)
+            return true;
+
+        return false;
+    }
+
+
+    /**
+     * This method will write the instance of the Contact into the database
+     */
+    public void insertContactIntoDB() throws SQLException {
         String os = null;
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet resultSet = null;
 
-        try
-        {
+        try {
             //1. Connect to the database
             conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
 
@@ -267,13 +258,9 @@ public class Contact1 {
 
 
             ps.executeUpdate();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
-        }
-        finally
-        {
+        } finally {
             if (ps != null)
                 ps.close();
 
@@ -285,12 +272,11 @@ public class Contact1 {
     /**
      * This will update the Contact in the database
      */
-    public void updateContactInDB() throws SQLException
-    {
+    public void updateContactInDB() throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
 
-        try{
+        try {
             //1.  connect to the DB
             conn = DriverManager.getConnection("jdbc:mysql://aws.computerstudi.es/gcc200353994", "gcc200353994", "pgz8FOjK7S");
 
@@ -316,13 +302,9 @@ public class Contact1 {
             //6. run the command on the SQL server
             ps.executeUpdate();
             ps.close();
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
-        }
-        finally
-        {
+        } finally {
             if (conn != null)
                 conn.close();
             if (ps != null)
