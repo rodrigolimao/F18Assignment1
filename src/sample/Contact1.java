@@ -1,15 +1,12 @@
 package sample;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.image.Image;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.NoSuchAlgorithmException;
+
 import java.security.SecureRandom;
 import java.sql.*;
 import java.time.LocalDate;
@@ -21,6 +18,10 @@ public class Contact1 {
     private File imageFile;
     private int contactID;
 
+
+    /*
+    First constructor with default Image
+     */
     public Contact1(String firstName, String lastName, String address, String phone, LocalDate birthday) {
         setFirstName(firstName);
         setLastName(lastName);
@@ -29,7 +30,9 @@ public class Contact1 {
         setBirthday(birthday);
         setImageFile(new File("./src/images/defaultImage.jpg"));
     }
-
+    /*
+   Second constructor with Image from desktop
+    */
     public Contact1(String firstName, String lastName, String address, String phone, LocalDate birthday, File imageFile) {
         setFirstName(firstName);
         setLastName(lastName);
@@ -44,6 +47,9 @@ public class Contact1 {
         return address;
     }
 
+    /*
+    Check if Address is empty
+     */
     public void setAddress(String address) {
         if (!address.isEmpty()) {
             this.address = address;
@@ -56,6 +62,9 @@ public class Contact1 {
         return contactID;
     }
 
+    /*
+Check if ContactID is bigger than 0
+ */
     public void setContactID(int contactID) {
         if (contactID >= 0)
             this.contactID = contactID;
@@ -68,6 +77,9 @@ public class Contact1 {
         return firstName;
     }
 
+    /*
+Check if First Name is empty
+ */
     public void setFirstName(String firstName) {
         if (!firstName.isEmpty()) {
             this.firstName = firstName;
@@ -80,6 +92,9 @@ public class Contact1 {
         return lastName;
     }
 
+    /*
+Check if Last Name is empty
+ */
     public void setLastName(String lastName) {
         if (!lastName.isEmpty()) {
             this.lastName = lastName;
@@ -93,6 +108,7 @@ public class Contact1 {
     }
 
     /**
+     * Check if the phone matches with the pattern
      * area code    city    house
      * NXX          -XXX    -XXXX
      *

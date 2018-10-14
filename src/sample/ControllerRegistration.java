@@ -24,10 +24,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import javax.imageio.ImageIO;
 
-import sample.Contact1;
 
 public class ControllerRegistration implements Initializable {
 
